@@ -7,17 +7,17 @@ init python:
             #constructor equivalent
             super(testSuspension, self).__init__()
             self.name = 'hello world'
-            self.width = 200
-            self.height = 200
+            self.width = 600
+            self.height = 300
 
         def render(self, width, height, st, at):
             #draws when the class is called
             #to redraw multiple times, utilize renpy.redraw() at the end
             r = renpy.Render(self.width, self.height)
 
-            r.blit(renpy.render(Solid('#F5F5F5', xsize=600, ysize=300), width, height, st, at), (50, 50))
+            r.blit(renpy.render(Solid('#000000', xsize=self.width, ysize=self.height), width, height, st, at), (0,0))
 
-            r.blit(renpy.render(Text(self.name), width, height, st, at), (75, 75))
+            r.blit(renpy.render(Text(self.name), width, height, st, at), (0, 50))
 
             renpy.redraw(self, 0)
             return r
@@ -30,12 +30,14 @@ init python:
 # now we're in renpy land
 
 screen testDisplayable:
-    text "super test boy"
+    text "super test boy":
+        xalign 0.5
+        yalign 0.5
+        ypos config.screen_height/2 - 170
     #this is to add the displayable class in
     add testSuspension():
         xalign 0.5
         yalign 0.5
-
 
 define j = Character('test boy')
 
