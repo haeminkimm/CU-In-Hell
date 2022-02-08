@@ -5,6 +5,7 @@ init python:
     class testSuspension(renpy.Displayable):
         def __init__(self):
             #constructor equivalent
+            super(testSuspension, self).__init__()
             self.name = 'hello world'
             self.width = 200
             self.height = 200
@@ -13,15 +14,18 @@ init python:
             #draws when the class is called
             #to redraw multiple times, utilize renpy.redraw() at the end
             r = renpy.Render(self.width, self.height)
+
+            r.blit(renpy.render(Solid('#F5F5F5', xsize=600, ysize=300), width, height, st, at), (50, 50))
+
+            r.blit(renpy.render(Text(self.name), width, height, st, at), (75, 75))
+
             renpy.redraw(self, 0)
             return r
 
         def event(self, ev, x, y, st):
             #used to pass a pygame event in
             if ev.type == pygame.KEYDOWN and ev.key == pygame.K_SPACE:
-                myfont = pygame.font.SysFont("Comic Sans MS", 18)
-                text = myfont.render("this is complete ass", 1, black)
-                r.blit(text, 50, 50)
+                self.name = 'this should change when i press space'
 
 # now we're in renpy land
 
@@ -29,8 +33,8 @@ screen testDisplayable:
     text "super test boy"
     #this is to add the displayable class in
     add testSuspension():
-        xalign 0.1
-        yalign 0.1
+        xalign 0.5
+        yalign 0.5
 
 
 define j = Character('test boy')
